@@ -1,16 +1,17 @@
-const findByID = eventHandler((event) => {
-    const id = getRouterParams(event, 'id' )!
+import db from '~/utils/db'
 
-    const articles = [
-        { id:1, title: 'Title#1', excerpt:'Excerpt#1'},
-        { id:2, title: 'Title#2', excerpt:'Excerpt#2'},
-        { id:3, title: 'Title#3', excerpt:'Excerpt#3'},
-    ]
+const Update = eventHandler(async(event) => {
+    const id  = +getRouterParam(event, 'id')!
     
-    const article = articles.find(article => article.id === +id)
-    
+    try{
+        const article = await db.article.delete({
+            where:{id},
+        })
+        
     return article
-    
+    }catch {
+        return null
+    }
 })
 
-export default findByID
+export default Update

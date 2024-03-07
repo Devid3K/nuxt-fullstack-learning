@@ -1,5 +1,5 @@
 export function slugify(str: string){
-    const result = stopPropagation()
+    const result = str
     .replace(/^\s+|\s+$/,'')
     .toLowerCase()
     .replace(/[^a-z0-9ก-๛ -]/, '')

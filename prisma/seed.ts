@@ -7,12 +7,13 @@ const prisma = new PrismaClient();
 async function main() {
   //Create Admin
   const admin = await prisma.user.upsert({
-    where: { email: "admin@bablecoder.com" },
+    where: { email: "admin@babelcoder.com" },
     update: {},
     create: {
       email: "admin@babelcoder.com",
       name: "Admin",
       role: "ADMIN",
+      password: "Password",
     },
   });
   //Create Users
@@ -24,13 +25,14 @@ async function main() {
     const createUserInput: Prisma.UserCreateInput = {
       name: faker.internet.displayName(),
       email: faker.internet.email(),
-      role: faker.helper.arrayElement(["ADMIN", "MANAGER", "MEMBER"]),
+      role: faker.helpers.arrayElement(["ADMIN", "MANAGER", "MEMBER"]),
       image: faker.internet.avatar(),
+      password: faker.internet.displayName()
     };
     const user = await prisma.user.upsert({
       where: { email: createUserInput.email },
       update: {},
-      created: createUserInput,
+      create: createUserInput,
     });
     if (user.role !== "MEMBER") adminIds.push(user.id);
     userIds.push(user.id);
@@ -38,7 +40,7 @@ async function main() {
   //Create Leaves
   const numOfLeaves = 100;
 
-  for (let i = 0; i < numOfleaves; i++) {
+  for (let i = 0; i < numOfLeaves; i++) {
     const status: LeaveStatus = faker.helpers.arrayElement([
       "PENDING",
       "APPROVED",
@@ -77,7 +79,7 @@ async function main() {
       excerpt: faker.lorem.paragraph(),
       content: faker.lorem.paragraph({ min: 3, max: 10 }),
       image: faker.image.url(),
-      user: { conect: { id: faker.helpers.arrayElement(adminIds) } },
+      user: { connect: { id: faker.helpers.arrayElement(adminIds) } },
     };
     await prisma.article.upsert({
       where: { slug: createArticleInput.slug },
@@ -95,8 +97,8 @@ async function main() {
       slug: slugify(title),
       excerpt: faker.lorem.paragraph(),
       content: faker.lorem.paragraph({ min: 3, max: 10 }),
-      image: faker.image.url(),
-      user: { conect: { id: faker.helpers.arrayElement(adminIds) } },
+      
+      user: { connect: { id: faker.helpers.arrayElement(adminIds) } },
     };
     await prisma.announcement.upsert({
       where: { slug: createAnnouncementInput.slug },
@@ -106,11 +108,9 @@ async function main() {
   }
 }
 
-main()
-  .then(async () => {
+main().then(async () => {
     await prisma.$disconnect();
-  })
-  .catch(async (e) => {
+  }).catch(async (e) => {
     console.error(e);
     await prisma.$disconnect();
     process.exit(1);

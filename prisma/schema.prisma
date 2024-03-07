@@ -28,6 +28,7 @@ enum LeaveStatus {
 model User {
   id           Int            @id @default(autoincrement())
   name         String
+  password     String
   email        String         @unique
   image        String?
   role         Role           @default(MEMBER)
@@ -35,7 +36,7 @@ model User {
   updatedAt    DateTime       @default(now())
   leaves       Leave[]
   announcement Announcement[]
-  articles      Article[]
+  articles     Article[]
 }
 
 model Leave {
