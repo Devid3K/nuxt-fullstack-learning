@@ -17,7 +17,7 @@ const emit = defineEmits<{
 const title = useCapitalize(props.kind);
 const isRegisterForm = props.kind === "register";
 const altLink = isRegisterForm ? "/auth/login" : "/auth/register";
-const altLinkText = isRegisterForm ? "Login" : "";
+const altLinkText = isRegisterForm ? "Login" : "Register";
 const state = reactive(isRegisterForm ?{
   email: undefined,
   password: undefined,
