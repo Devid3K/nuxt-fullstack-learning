@@ -1,13 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-
   build: {
     transpile: ["@vuepic/vue-datepicker",'jsonwebtoken'],
   },
-
   modules: ["@nuxt/ui", "@nuxtjs/tailwindcss", "@nuxt/image", "nuxt-lodash",'@sidebase/nuxt-auth'],
-
   routeRules: {
     "/admin": { redirect: "/admin/dashboard" },
     "/leaves": { ssr: false },
@@ -19,7 +16,12 @@ export default defineNuxtConfig({
       routes: ['/announcements/succurro-sopor-celer-vulgaris'],
     }
   },
-
+  runtimeConfig:{
+    accessToken: {
+      expiesIn: process.env.NUXT_EXPIRES_IN ?? '30m',
+      secretKey: process.env.NUXT_SECRET_KEY
+    }
+  },
   ui:{
     icons:['heroicons','el']
   },

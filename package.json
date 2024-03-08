@@ -36,6 +36,7 @@
     "@sidebase/nuxt-auth": "^0.7.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/formidable": "^3.4.5",
+    "@types/jsonwebtoken": "^9.0.6",
     "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^9.0.2",
     "nuxt-lodash": "^2.5.3",
