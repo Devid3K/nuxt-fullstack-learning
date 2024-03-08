@@ -2,9 +2,17 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
 
-  routeRules:{
-    '/admin':{redirect:'/admin/dashboadrd'},
-  },
+  modules: ["@nuxt/ui", "@nuxtjs/tailwindcss", "@nuxt/image", "nuxt-lodash"],
 
-  modules: ["@nuxtjs/tailwindcss"]
-})
+  routeRules: {
+    "/admin": { redirect: "/admin/dashboard" },
+    "/leaves": { ssr: false },
+    "/announcements": { prerender: true },
+  },
+  build: {
+    transpile: ["@vuepic/vue-datepicker"],
+  },
+  ui:{
+    icons:['heroicons','el']
+  }
+});

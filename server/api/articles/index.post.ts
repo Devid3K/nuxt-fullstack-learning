@@ -1,5 +1,10 @@
+import type { z } from 'zod'
+
 import db from '~/utils/db'
 import { slugify } from '~/utils/slugify'
+import { createArticleInputValidator } from '~/validators/articles'
+
+export type CreateArticleInput = z.infer<typeof createArticleInputValidator>
 
 const create = eventHandler(async(event) => {
     const form = await readBody(event)

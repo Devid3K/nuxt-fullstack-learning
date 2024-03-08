@@ -1,23 +1,27 @@
 <script setup lang="ts">
+import type { ArticleList } from "~/server/api/articles/index.get";
+const { articles } = defineProps<{ articles: ArticleList }>();
 
-import UidataTable from "./UidataTable.vue";
-import type {Column} from '~/components/article/UidataTable.vue';
 
-interface ArticleItem {
-    id:number
-    title:string
-    excerpt: string
-}
-const {data: articles} = await useFetch('/api/articles')
-const columns: Column<ArticleItem>[] = [
-    { name:'ID', field:'id'},
-    { name:'Title', field:'title'},
-    { name:'Excerpt', field:'excerpt'},
-]
+const navigateToDetailsPage = (slug: string) => navigateTo(`/articles/${slug}`)
 </script>
 
 <template>
-  <div>
-    <UidataTable @trigger="console.log($event)" :columns="columns" :rows="articles"/>
-  </div>
+  <h1 class="text-center text-4xl my-4">Article List</h1>
+
+  <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <UCard v-for="article of articles" :key="article.id" class="cursor-pointer" @click="navigateToDetailsPage(article.slug)">
+      <template #header>
+        <h3>
+          {{ article.title }}
+        </h3>
+      </template>
+      <NuxtImg :src="article.image" class="mx-auto" />
+      <template #footer>
+        <p class="mt-auto">
+          {{ article.excerpt }}
+        </p>
+      </template>
+    </UCard>
+  </section>
 </template>

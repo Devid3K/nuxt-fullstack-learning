@@ -1,5 +1,25 @@
 <template>
-    <ULink to="/">
-        <UAvatar src="/public/assets/images/11.png"></UAvatar>
+    <header class="flex h-16 border-b p-4 items-center">
+    <ULink to="/" active-class="text-primary" class="p-4 ">
+        <UAvatar ></UAvatar>
     </ULink>
+    <ULink to="/admin" active-class="text-primary" class="p-4 ">
+        Admin
+
+    </ULink>
+    <ULink to="/leaves" active-class="text-primary" class="p-4 ">
+        Leaves
+
+    </ULink>
+    <ULink to="/articles" active-class="text-primary" class="p-4 ">
+        Articles
+
+    </ULink>
+    <ULink to="/announcements" active-class="text-primary" class="p-4 ">
+        Announcements
+    </ULink>
+    <ULink to="/auth/login" active-class="text-primary" class="mr-4 ml-auto">
+        Login
+    </ULink>
+    </header>
 </template>

@@ -1,22 +1,22 @@
-
 import db from '~/utils/db'
 
 const findAll = eventHandler(async() => {
-    const articles = await db.article.findMany({
+    const announcement = await db.announcement.findMany({
         select:{
             id:true,
             title: true,
             slug: true,
             excerpt: true,
-            image: true,
         },
         orderBy:{
             updatedAt:'desc',
         }
     })
-    return articles
+    return announcement 
 })
 
 export default findAll
-export type ArticleList = Awaited<ReturnType<typeof findAll>>
-export type ArticleItem = ArticleList[number]
+
+export type AnnouncementList = Awaited<ReturnType<typeof findAll>>
+
+export type AnnouncementItem = AnnouncementList[number]

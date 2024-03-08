@@ -1,0 +1,4 @@
+<template>
+    <AdminArticleForm />
+        
+</template>
