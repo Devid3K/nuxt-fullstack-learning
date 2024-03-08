@@ -1,7 +1,7 @@
 <template>
     <header class="flex h-16 border-b p-4 items-center">
     <ULink to="/" active-class="text-primary" class="p-4 ">
-        <UAvatar ></UAvatar>
+        <img src="../../public/favicon.ico"></img>
     </ULink>
     <ULink to="/admin" active-class="text-primary" class="p-4 ">
         Admin

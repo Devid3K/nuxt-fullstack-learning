@@ -2,8 +2,8 @@
 import { z } from "zod";
 import { updateArticleInputValidator, createArticleInputValidator } from "~/validators/articles";
 import type { FormSubmitEvent } from "#ui/types";
-import type { CreateArticleInput } from "~/server/api/articles/index.post";
-import type { UpdateArticleInput } from "~/server/api/articles/[slug].patch";
+import type { CreateArticleInput } from "~/server/api/admin/articles/index.post";
+import type { UpdateArticleInput } from "~/server/api/admin/articles/[slug].patch";
 import type { ArticleDetails } from "~/server/api/articles/[slug].get";
 
 interface Props {
@@ -18,7 +18,7 @@ const emit = defineEmits<{
 }>();
 const title = useCapitalize(props.kind);
 const isCreateFrom = props.kind === "create";
-const state = reactive(isCreateFrom ?{
+const state = reactive<UpdateArticleInput>(isCreateFrom ?{
     title: undefined,
     excerpt: undefined,
     content: undefined,
@@ -41,7 +41,12 @@ function onSubmit(event: FormSubmitEvent<EmitData>) {
   >
     <h1 class="text-center text-3xl font-bold">{{ title }}</h1>
 
-    <UFormGroup v-if="isCreateFrom" label="Title" name="title">
+    <UFormGroup  label="Image" name="image">
+      <UiImageUploader :image="props.article?.image" @submit="state.image = $event"/>
+    </UFormGroup>
+
+
+    <UFormGroup  label="Title" name="title">
       <UInput v-model="state.title" />
     </UFormGroup>
 

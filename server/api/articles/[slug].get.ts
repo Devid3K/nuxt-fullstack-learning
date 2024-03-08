@@ -1,15 +1,16 @@
 import db from '~/utils/db'
 
-const FindByslug = eventHandler(async(event) => {
+const findBySlug = eventHandler(async(event) => {
     const slug  = getRouterParam(event, 'slug')!
     
     try{
-        const article = await db.article.delete({
+        const article = await db.article.findUnique({
             where:{slug},
             select:{
                 image: true,
                 content: true,
-                title: true
+                title: true,
+                excerpt: true
 
             }
         })
@@ -20,6 +21,6 @@ const FindByslug = eventHandler(async(event) => {
     }
 })
 
-export default FindByslug
+export default findBySlug
 
-export type ArticleDetails = Awaited<ReturnType<typeof FindByslug>>
+export type ArticleDetails = Awaited<ReturnType<typeof findBySlug>>

@@ -43,7 +43,7 @@ function onSubmit(event: FormSubmitEvent<EmitData>) {
   >
     <h1 class="text-center text-3xl font-bold">{{ title }}</h1>
 
-    <UFormGroup v-if="isRegisterForm" label="Namel" name="name">
+    <UFormGroup v-if="isRegisterForm" label="Name" name="name">
       <UInput v-model="state.name" />
     </UFormGroup>
 

@@ -1,38 +1,38 @@
 <script setup lang="ts">
 import type { ArticleItem } from "~/server/api/articles/index.get";
-import  ArticleDetails  from '~/components/article/ArticleDetails.vue'
+import ArticleDetails from "~/components/article/ArticleDetails.vue";
 import AdminUpdateArticle from "~/components/admin/article/AdminUpdateArticle.vue";
-import AdminCreateArticle from '~/components/admin/article/AdminCreateArticle.vue'
-const { data: articles, status } = await useFetch("/api/articles");
+import AdminCreateArticle from "~/components/admin/article/AdminCreateArticle.vue";
+const { data: articles, status, refresh } = await useFetch("/api/articles");
 
-const isOpen = ref(false)
-const selectedSlug = ref<string>()
-const displayComponent = shallowRef<Component>()
+const isOpen = ref(false);
+const selectedSlug = ref<string>();
+const displayComponent = shallowRef<Component>();
 const columns = [
   { key: "id", label: "ID" },
   { key: "title", label: "Title" },
   { key: "actions" },
 ];
 
-function items ( row : ArticleItem) {
+function items(row: ArticleItem) {
   return [
     [
       {
         label: "Details",
         icon: "i-heroicons-document-magnifying-glass",
         click() {
-            isOpen.value = true;
-            selectedSlug.value = row.slug
-            displayComponent.value = ArticleDetails;
+          isOpen.value = true;
+          selectedSlug.value = row.slug;
+          displayComponent.value = ArticleDetails;
         },
       },
       {
         label: "Edit",
         icon: "i-heroicons-pencil-square-20-solid",
         click() {
-            isOpen.value = true;
-            selectedSlug.value = row.slug
-            displayComponent.value = AdminUpdateArticle;
+          isOpen.value = true;
+          selectedSlug.value = row.slug;
+          displayComponent.value = AdminUpdateArticle;
         },
       },
     ],
@@ -46,9 +46,14 @@ function items ( row : ArticleItem) {
   ];
 }
 
-function openCreateArticle(){
- isOpen.value = true
- displayComponent.value = AdminCreateArticle
+function openCreateArticle() {
+  isOpen.value = true;
+  displayComponent.value = AdminCreateArticle;
+}
+
+function handleSuccess() {
+  isOpen.value = false;
+  refresh()
 }
 </script>
 <template>
@@ -58,14 +63,22 @@ function openCreateArticle(){
   <template v-else>
     <UTable :columns="columns" :rows="articles">
       <template #actions-data="{ row }">
-        <UDropdown :items="items( row )">
-          <UButton color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" />
+        <UDropdown :items="items(row)">
+          <UButton
+            color="gray"
+            variant="ghost"
+            icon="i-heroicons-ellipsis-horizontal-20-solid"
+          />
         </UDropdown>
       </template>
     </UTable>
     <USlideover v-model="isOpen">
-      <div class="p-4 ">
-        <component :is="displayComponent" :slug="selectedSlug"></component>
+      <div class="p-4">
+        <component
+          :is="displayComponent"
+          :slug="selectedSlug"
+          @success="handleSuccess"
+        ></component>
       </div>
     </USlideover>
     <UButton
@@ -78,5 +91,4 @@ function openCreateArticle(){
       @click="openCreateArticle"
     />
   </template>
-
 </template>

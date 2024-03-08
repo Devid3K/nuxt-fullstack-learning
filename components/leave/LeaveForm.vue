@@ -54,8 +54,6 @@ async function onSubmit(event: FormSubmitEvent<EmitData>) {
       <UTextarea v-model="state.reason" />
     </UFormGroup>
 
-   
-
       <UButton type="submit"> {{ title }} </UButton>
 
   </UForm>
