@@ -40,7 +40,10 @@ function items(row: ArticleItem) {
       {
         label: "Delete",
         icon: "i-heroicons-trash-20-solid",
-        click() {},
+        click:async () => {
+          await useFetch(`/api/admin/articles/${row.slug}`, { method: 'DELETE'})
+          refresh()
+        },
       },
     ],
   ];
