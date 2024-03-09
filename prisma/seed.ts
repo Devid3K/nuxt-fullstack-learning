@@ -2,6 +2,7 @@ import type { LeaveStatus,Prisma } from "@prisma/client";
 import { faker } from "@faker-js/faker";
 import { PrismaClient } from "@prisma/client";
 import { slugify } from "../utils/slugify";
+import   bcrypt  from 'bcryptjs';
 const prisma = new PrismaClient();
 
 async function main() {
@@ -13,7 +14,7 @@ async function main() {
       email: "admin@babelcoder.com",
       name: "Admin",
       role: "ADMIN",
-      password: "Password",
+      password: await bcrypt.hash("password",12),
     },
   });
   //Create Users
@@ -27,7 +28,7 @@ async function main() {
       email: faker.internet.email(),
       role: faker.helpers.arrayElement(["ADMIN", "MANAGER", "MEMBER"]),
       image: faker.internet.avatar(),
-      password: faker.internet.displayName()
+      password: await bcrypt.hash(faker.internet.password(), 12)
     };
     const user = await prisma.user.upsert({
       where: { email: createUserInput.email },

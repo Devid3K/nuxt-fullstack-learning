@@ -18,7 +18,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig:{
     accessToken: {
-      expiesIn: process.env.NUXT_EXPIRES_IN ?? '30m',
+      expiresIn: process.env.NUXT_EXPIRES_IN ?? '30m',
       secretKey: process.env.NUXT_SECRET_KEY
     }
   },
@@ -38,6 +38,17 @@ export default defineNuxtConfig({
         getSession: { path: '/profile'},
         signOut: { method: 'delete'}
       },
+      token:{
+        signInResponseTokenPointer:'/token/accessToken',
+        maxAgeInSeconds: 7 * 24 * 60 * 60,
+      },
+      sessionDataType:{
+        id: 'string',
+        email: 'string',
+        name: 'string',
+        role: 'ADMIN | MANAGER | MEMBER',
+        image: 'string',
+      }
     }
   }
 });

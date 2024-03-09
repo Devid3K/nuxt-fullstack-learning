@@ -4,7 +4,7 @@ import path from "node:path";
 import db from "~/utils/db";
 import { slugify } from "~/utils/slugify";
 import { readFiles } from "h3-formidable";
-import  { updateArticleInputValidator } from "~/validators/articles";
+import { updateArticleInputValidator } from "~/validators/articles";
 
 export type UpdateArticleInput = z.infer<typeof updateArticleInputValidator>;
 
@@ -20,10 +20,10 @@ const Update = eventHandler(async (event) => {
     content: fields.content?.[0],
   });
   if (!result.success)
-  throw createError({ statusCode: 422, data: result.error.flatten() });
+    throw createError({ statusCode: 422, data: result.error.flatten() });
 
   const image = imageList?.[0];
-  let newImagePath: string | undefined
+  let newImagePath: string | undefined;
   if (image) {
     const oldArticle = await db.article.findUnique({
       where: { slug },
@@ -31,12 +31,17 @@ const Update = eventHandler(async (event) => {
         image: true,
       },
     });
-    const newPath = `${path.join("public", "uploads", crypto.randomUUID())}.${image.mimetype?.split("/")[1]}`;
+    const newPath = `${path.join("public", "uploads", crypto.randomUUID())}.${
+      image.mimetype?.split("/")[1]
+    }`;
     await fs.copyFile(image.filepath, newPath);
     newImagePath = newPath.split("public")[1];
 
-    if(oldArticle) 
-    await fs.unlink(path.join("public", oldArticle.image));
+    if (oldArticle) {
+      const result = z.string().url().safeParse(oldArticle.image);
+      if (!result.success)
+        await fs.unlink(path.join("public", oldArticle.image));
+    }
   }
 
   const article = await db.article.update({

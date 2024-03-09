@@ -1,5 +1,4 @@
 <script setup lang="ts" generic="K extends 'register' | 'login'">
-import { z } from "zod";
 import { loginInputValidator, registerInputValidator } from "~/validators/auth";
 import type { FormSubmitEvent } from "#ui/types";
 import type { RegisterInput } from "~/server/api/auth/register.post";

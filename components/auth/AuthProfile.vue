@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { z } from "zod";
 import  type { FormSubmitEvent} from '#ui/types'
-import type { ProflieInput } from "~/server/api/auth/profile.patch";
+import type { ProfileInput } from "~/server/api/auth/profile.patch";
 import { profileInputValidator } from "~/validators/auth";
 
 interface Props {
@@ -13,20 +12,18 @@ interface Props {
     image: string;
   };
 }
-
-
 const props = defineProps<Props>();
 const emit = defineEmits<{
-  (e: "submit", profile: ProflieInput): void;
+  (e: "submit", profile: ProfileInput): void;
 }>();
 
-const state = reactive<ProflieInput>({
+const state = reactive<ProfileInput>({
   ...props.profile,
   password: undefined,
   image: undefined,
 });
 const schema = profileInputValidator;
-function onSubmit(event: FormSubmitEvent<ProflieInput>) {
+function onSubmit(event: FormSubmitEvent<ProfileInput>) {
   emit("submit", event.data);
 }
 </script>
