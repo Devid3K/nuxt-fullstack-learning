@@ -4,10 +4,10 @@ import { verify } from "jsonwebtoken";
 export interface AuthPayload {
   sub: number;
   email: string;
-  role: "ADMIN " | "MANAGER" | "MEMBER";
+  role: "ADMIN" | "MANAGER" | "MEMBER";
 }
 
-export function ensureAuth(event: H3Event) {
+export function ensureAuth(event: H3Event, roles?: AuthPayload['role'][]) {
   const err = createError({ statusCode: 401, statusMessage: "Please login" });
   const { accessToken: { secretKey } } = useRuntimeConfig();
   const sessionToken = getCookie(event, 'auth.token');
@@ -15,10 +15,16 @@ export function ensureAuth(event: H3Event) {
   if (!sessionToken) 
     throw err;
 
-  try {
-    return verify(sessionToken, secretKey) as unknown as AuthPayload;
-  } 
-  catch {
-    throw err;
-  }
+
+   const payload = verify(sessionToken, secretKey) as unknown as AuthPayload;
+   if(!payload) throw err
+
+   if(roles && !roles.includes(payload.role))
+   throw createError({
+    statusCode: 403,
+    statusMessage: 'Youare not allowed to access this resource'
+   })
+
+   return payload
+
 }

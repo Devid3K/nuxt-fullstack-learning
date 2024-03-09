@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
 const { data: user, status,signOut} = useAuth()
+const isAdmin = computed(() => ['ADMIN', 'MANAGER'].includes(user.value?.role))
 const authMenuItems = [
     [
         {
@@ -29,7 +30,7 @@ const authMenuItems = [
     <ULink to="/" active-class="text-primary" class="p-4 ">
         <img src="../../public/favicon.ico"></img>
     </ULink>
-    <ULink to="/admin" active-class="text-primary" class="p-4 ">
+    <ULink v-if="isAdmin" to="/admin" active-class="text-primary" class="p-4 ">
         Admin
 
     </ULink>

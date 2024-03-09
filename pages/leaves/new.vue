@@ -1,4 +1,7 @@
 <script setup lang="ts">
+definePageMeta({
+    middleware: ['auth'],
+})
 import type { CreateLeaveInput } from '~/server/api/leaves/index.post';
 
 async function handleSubmit(form: CreateLeaveInput){

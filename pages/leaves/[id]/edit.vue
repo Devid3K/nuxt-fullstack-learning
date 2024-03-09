@@ -1,4 +1,7 @@
 <script setup lang="ts">
+definePageMeta({
+    middleware: ['auth'],
+})
 import type { UpdateLeaveInput } from '~/server/api/leaves/[id].patch';
 
 const route = useRoute()

@@ -5,10 +5,11 @@ import db from "~/utils/db";
 import { slugify } from "~/utils/slugify";
 import { readFiles } from "h3-formidable";
 import { updateArticleInputValidator } from "~/validators/articles";
-
+import { ensureAuth } from "~/utils/server-auth";
 export type UpdateArticleInput = z.infer<typeof updateArticleInputValidator>;
 
 const Update = eventHandler(async (event) => {
+  ensureAuth(event,[ 'ADMIN','MANAGER'])
   const slug = getRouterParam(event, "slug")!;
   const {
     files: { image: imageList },

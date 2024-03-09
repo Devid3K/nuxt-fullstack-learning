@@ -1,4 +1,7 @@
 <script setup lang="ts">
+definePageMeta({
+    middleware: ['auth'],
+})
 const {data: leaves } = await useFetch('/api/leaves')
 
 
