@@ -10,10 +10,10 @@ FROM base as build
 ARG DATABASE_URL
 ARG NUXT_BASE_URL
 COPY prisma ./
-COPY package.json pnpm-lock.yaml\* ./
-RUN yarn global add pnpm && pnpm i --prod=false
+COPY package.json npm-lock.yaml\* ./
+RUN yarn global add npm && npm i --prod=false
 COPY . .
-RUN pnpm run db:deploy && pnpm run build
+RUN npm run db:deploy && npm run build
 
 # Run
 FROM base
