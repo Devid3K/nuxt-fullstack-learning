@@ -10,6 +10,7 @@ const {data: leave} =await useFetch(`/api/leaves/${id}`)
 
 async function handleSubmit(form: UpdateLeaveInput){
     await useFetch(`/api/leaves/${id}`,{ method:'PATCH', body: form})
+    navigateTo('/leaves')
 }
 </script>
 

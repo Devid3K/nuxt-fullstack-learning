@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   build: {
     transpile: ["@vuepic/vue-datepicker",'jsonwebtoken'],
   },
-  modules: ["@nuxt/ui", "@nuxtjs/tailwindcss", "@nuxt/image", "nuxt-lodash",'@sidebase/nuxt-auth','@pinia/nuxt'],
+  modules: ["@nuxt/ui", "@nuxtjs/tailwindcss", "@nuxt/image", "nuxt-lodash",'@sidebase/nuxt-auth','@pinia/nuxt','@nuxt/content','nuxt-content-assets'],
   routeRules: {
     "/admin": { redirect: "/admin/dashboard" },
     "/leaves": { ssr: false },
@@ -18,8 +18,11 @@ export default defineNuxtConfig({
   },
   runtimeConfig:{
     accessToken: {
-      expiresIn: process.env.NUXT_EXPIRES_IN ?? '30m',
-      secretKey: process.env.NUXT_SECRET_KEY
+      expiresIn: '30m',
+      secretKey: ''
+    },
+    public:{
+      baseUrl:''
     }
   },
   ui:{
