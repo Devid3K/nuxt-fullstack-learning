@@ -56,7 +56,7 @@ const currentAvatar = props.profile?.image ? useGetImagePath(props.profile.image
     </UFormGroup>
 
     <div class="flex justify-between items-center">
-      <UButton type="submit"> Edit Profile </UButton>
+      <UButton to="/leaves" type="submit"> Edit Profile </UButton>
 
     </div>
   </UForm>
