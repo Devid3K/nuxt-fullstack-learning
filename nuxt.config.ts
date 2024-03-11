@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     "/leaves": { ssr: false },
     "/announcements": { prerender: true },
     '/articles':{ swr: 60 * 60 },
-    '/articles/**' :{ swr: 7* 24 * 60 * 60 },
+    '/articles/**' :{ swr: 7 * 24 * 60 * 60 },
   },
   nitro:{
     prerender:{
