@@ -6,14 +6,16 @@ export default defineNuxtConfig({
   },
   modules: ["@nuxt/ui", "@nuxtjs/tailwindcss", "@nuxt/image", "nuxt-lodash",'@sidebase/nuxt-auth','@pinia/nuxt','@nuxt/content','nuxt-content-assets'],
   routeRules: {
+    "/": { redirect: "/leaves" },
     "/admin": { redirect: "/admin/dashboard" },
     "/leaves": { ssr: false },
     "/announcements": { prerender: true },
-    '/articles':{ swr: 15 },
+    '/articles':{ swr: 60 * 60 },
+    '/articles/**' :{ swr: 7* 24 * 60 * 60 },
   },
   nitro:{
     prerender:{
-      routes: ['/announcements/succurro-sopor-celer-vulgaris'],
+      routes: [],
     }
   },
   runtimeConfig:{
@@ -53,5 +55,11 @@ export default defineNuxtConfig({
         image: 'string',
       }
     }
-  }
+  },
+  hooks: {
+    close: (nuxt) => {
+      if (!nuxt.options._prepare)
+        process.exit()
+    },
+  },  
 });

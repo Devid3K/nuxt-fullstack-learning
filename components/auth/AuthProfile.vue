@@ -26,6 +26,7 @@ const schema = profileInputValidator;
 function onSubmit(event: FormSubmitEvent<ProfileInput>) {
   emit("submit", event.data);
 }
+const currentAvatar = props.profile?.image ? useGetImagePath(props.profile.image) : undefined
 </script>
 
 <template>
@@ -38,7 +39,7 @@ function onSubmit(event: FormSubmitEvent<ProfileInput>) {
     <h1 class="text-center text-3xl font-bold">Profile</h1>
     <UDivider/>
     <UFormGroup  label="Image" name="image">
-      <UiImageUploader :image="props.profile?.image" @submit="state.image = $event"/>
+      <UiImageUploader :image="currentAvatar" @submit="state.image = $event"/>
     </UFormGroup>
 
 

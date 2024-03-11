@@ -23,6 +23,8 @@ const authMenuItems = [
     ]
 ]
 
+const { data: contentNavigation  } = useAsyncData('navigation', () => fetchContentNavigation()) 
+const currentAvatar = computed(() => user.value?.image ? useGetImagePath(user.value?.image) : undefined)
 </script>
 
 <template>
@@ -45,8 +47,10 @@ const authMenuItems = [
     <ULink to="/announcements" active-class="text-primary" class="p-4 ">
         Announcements
     </ULink>
+    <ULink v-for="item of contentNavigation" :key="item.path" active-class="text-primary"
+    class="mx-4" :to="item._path">{{ item.title }}</ULink>
     <UDropdown v-if="status === 'authenticated'" :items="authMenuItems" :ui="{ item:{ disabled:'cursor-text select-text'}}" :popper="{ placement:'bottom-start'}" class="mx-4 ml-auto">
-        <UAvatar :src="user?.image">
+        <UAvatar :src="currentAvatar">
             <template #item="{ item }">
                 <span class="truncate">
                     {{ item.label }}

@@ -1,11 +1,11 @@
 import { z } from 'zod'
 
-export const useGetImagePath = (file: string) => {
-    const { public: { baseUrl }} = useRuntimeConfig()
+export function useGetImagePath(file: string) {
+  const { public: { baseUrl } } = useRuntimeConfig()
 
-    const result = z.string().url().safeParse(file)
-    if(result.success)
-        return file
+  const result = z.string().url().safeParse(file)
+  if (result.success)
+    return file
 
-    return `${baseUrl}${file}`
+  return `${baseUrl}/api${file}`
 }
